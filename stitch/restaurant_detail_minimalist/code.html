@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#5f5e5e",
+              "error-container": "#ffdad6",
+              "on-error-container": "#410002",
+              "on-primary-fixed": "#ffffff",
+              "on-tertiary-fixed-variant": "#e4e2e2",
+              "on-tertiary": "#e4e2e2",
+              "tertiary-fixed-dim": "#464747",
+              "surface-container-highest": "#e2e2e2",
+              "primary": "#000000",
+              "outline-variant": "#c6c6c6",
+              "on-background": "#1b1b1b",
+              "outline": "#777777",
+              "surface-variant": "#e2e2e2",
+              "on-secondary-fixed-variant": "#3b3b3b",
+              "primary-fixed": "#5e5e5e",
+              "tertiary-fixed": "#5e5e5e",
+              "surface-dim": "#dadada",
+              "surface-container-high": "#e8e8e8",
+              "surface-tint": "#5e5e5e",
+              "surface-container-low": "#f3f3f3",
+              "on-error": "#ffffff",
+              "secondary-container": "#d6d4d3",
+              "inverse-primary": "#c6c6c6",
+              "inverse-surface": "#303030",
+              "surface": "#f9f9f9",
+              "inverse-on-surface": "#f1f1f1",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#474747",
+              "primary-fixed-dim": "#474747",
+              "tertiary": "#3b3b3b",
+              "on-primary-fixed-variant": "#e2e2e2",
+              "on-secondary-container": "#1b1c1c",
+              "on-surface": "#1b1b1b",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-container": "#757474",
+              "background": "#f9f9f9",
+              "on-secondary": "#ffffff",
+              "secondary-fixed": "#c8c6c6",
+              "on-primary": "#e2e2e2",
+              "on-tertiary-fixed": "#ffffff",
+              "surface-container": "#eeeeee",
+              "on-primary-container": "#ffffff",
+              "primary-container": "#3b3b3b",
+              "surface-bright": "#f9f9f9",
+              "on-tertiary-container": "#ffffff",
+              "secondary-fixed-dim": "#acabaa",
+              "on-secondary-fixed": "#1b1c1c"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Noto Serif"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grayscale-image {
+            filter: grayscale(100%) contrast(110%);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 bg-white dark:bg-black">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-full">
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-black dark:text-white cursor-pointer hover:opacity-70 transition-opacity duration-300">menu</span>
+</div>
+<div class="text-xl font-black tracking-tighter text-black dark:text-white font-headline">GASTRONOMY</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-black dark:text-white cursor-pointer hover:opacity-70 transition-opacity duration-300">search</span>
+</div>
+</div>
+<div class="bg-gray-100 dark:bg-gray-900 h-[1px] w-full"></div>
+</header>
+<main class="pt-16 pb-24">
+<!-- Hero Section -->
+<section class="relative h-[707px] w-full overflow-hidden bg-black">
+<img alt="Fine dining restaurant interior" class="w-full h-full object-cover grayscale-image opacity-80" data-alt="Interior of a minimalist high-end restaurant with black marble surfaces, sharp architectural lines, and dramatic spotlighting on single tables." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi6O5ll3nteANZZaJduXn7SWBAx16rE2auIxjCCbrPfRwkLB5Ob0nGYofI_MSks0UluYrT49E4zm1BiH5Tw5n-sHHsfQBXCn_lPYEphzzP_ohYxCaP8vh-WKkK1X_juG5qGvzxqNlymt4HnAYjnu_9UnOoUKuJJIUvVLiYEa4AW_xGc1iZuYhcP4xTtpFzbPnSCWTYicuDgGxjNYvrTCEmx6rQzptG6Fw8hqsOyJCGKDmT88OjBlIJKhCke1ARhPwLL4l1vMiCe54"/>
+<div class="absolute inset-0 flex flex-col justify-end p-8 md:p-20 bg-gradient-to-t from-black/80 to-transparent">
+<p class="font-headline text-sm uppercase tracking-[0.3em] text-on-primary/60 mb-4">Michelin Star • Paris</p>
+<h1 class="font-headline text-6xl md:text-9xl font-black text-white leading-[0.8] tracking-tighter uppercase mb-6">
+                    L'Obscur
+                </h1>
+<div class="w-24 h-1 bg-white mb-8"></div>
+</div>
+</section>
+<!-- Intro Storytelling -->
+<section class="px-6 py-20 md:py-32 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
+<div class="md:col-span-5">
+<h2 class="font-headline text-3xl font-black uppercase tracking-tight mb-8">The Philosophy of Silence</h2>
+</div>
+<div class="md:col-span-7">
+<p class="text-xl md:text-2xl leading-relaxed text-on-surface mb-8 italic">
+                    "Gastronomy is not merely the consumption of food, but a dialogue between the architect and the palate. At L'Obscur, we strip away the unnecessary, leaving only the soul of the ingredient."
+                </p>
+<p class="text-lg text-outline leading-relaxed">
+                    Founded in 2021, our kitchen operates on the principle of monochromatic intensity. By limiting our palette, we amplify the nuances of texture and temperature. Every dish is a curated experience of architectural precision.
+                </p>
+</div>
+</section>
+<!-- Specialties - Asymmetric Layout -->
+<section class="bg-surface-container-low py-20 overflow-hidden">
+<div class="px-6 max-w-7xl mx-auto">
+<div class="flex items-baseline justify-between mb-16">
+<h3 class="font-headline text-sm uppercase tracking-[0.4em] font-bold">Signature Curations</h3>
+<span class="text-xs font-headline uppercase tracking-widest text-outline">Autumn Sequence 04</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+<!-- Item 1 -->
+<div class="relative group">
+<div class="aspect-[4/5] bg-surface-dim overflow-hidden">
+<img alt="Signature Dish 1" class="w-full h-full object-cover grayscale-image transition-transform duration-700 group-hover:scale-105" data-alt="Close-up of a single perfectly seared scallop on a black ceramic plate with a minimalist reduction drizzle and micro-greens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJGH18jShNa0k1zw5XMcHzw6WLNXZd-yzDbjEaezBBAhuzkqL9yQhiXoxyJwbnHxacIofCvzPS5ndV6T5YGTjocj3iSDlWtTS6nAZcTpg27Pfgi4eeCkL18MBTJ5a21uka9jOMsE-U5dDKCoFn1McrwCWxA-XNH59nvHlyFu6GQ_Axsmu8BwSOIjVpkEN0C_DL-xtCfsjANGXs1SjsonawJ6AZUYx9neU3tXe-TZJ_DnaZ5pNHW42mjX436cq8u8I-b19vfBocV3M"/>
+</div>
+<div class="mt-6">
+<p class="font-headline text-xs uppercase tracking-widest text-outline mb-2">01 / Entrée</p>
+<h4 class="font-headline text-2xl font-bold uppercase mb-4">The Monolith Scallop</h4>
+<p class="text-on-surface-variant max-w-md">Salt-aged Atlantic scallop, fermented black garlic emulsion, and dehydrated charcoal ash.</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="relative group md:mt-32">
+<div class="aspect-[4/5] bg-surface-dim overflow-hidden">
+<img alt="Signature Dish 2" class="w-full h-full object-cover grayscale-image transition-transform duration-700 group-hover:scale-105" data-alt="Exquisite minimalist dessert with a sphere of white chocolate and a dark cocoa crumble on a grey stone slab." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSlBL8Sv1EyUK77cEZaq6HIAHNtOWiPzQrLy8v9XM48o1dbskjbFkUm4D9AQ1iixHiY1Wgov9pxPcxYWS6Xauk2nV5DggtTsC6MSnzQjNbY4lFNcuOGFJDTdk4kzvSIsks9f9JAf5XF1SXRphXG_9yOIYK4QblgwmLd5W3Has6boG7XnzIs_OdQ0sqTCczccdqdOnN6VjSCbuXwfe5lJfYlR-vlSzFa1AaeK1xuwyxBTbbuNzj_cCjqEul4JwFSH_stMeBBSuxFeo"/>
+</div>
+<div class="mt-6">
+<p class="font-headline text-xs uppercase tracking-widest text-outline mb-2">02 / Final</p>
+<h4 class="font-headline text-2xl font-bold uppercase mb-4">Achromatic Sphere</h4>
+<p class="text-on-surface-variant max-w-md">White chocolate encased yuzu curd, 90% dark cocoa soil, and nitrogen-chilled crème.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Architectural Space -->
+<section class="py-32 px-6 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 items-center gap-16">
+<div class="md:col-span-7 order-2 md:order-1">
+<img alt="Dining Table Detail" class="w-full aspect-video object-cover grayscale-image" data-alt="Birds-eye view of a long dark wooden communal table with minimalist white china and tall slender black candles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGE86UMAQs1btiJS1G-p0adzHqgx6pJUQ4CmPAfTM1MgYnCTqZjUe9MuhDAgNbkAdYaXqKJOilE7HUVG8IIJK0rVPOcULiqsegk9J_9a_zbaA829sp0Pyy7AF_tPEkmN_4fo-ZrnwzmM9kmX2FGfNRw8AID-mwZm-jdG_EiZiNfr5h5fq4L0pDkskhwXv56zlRsKjtCLwgu0GtmKslEAp-YAKg0sY9moFGhCNdsstqNfZ9Sm6436Q7xxVeEgSTS-uhtcVcNj07lns"/>
+</div>
+<div class="md:col-span-5 order-1 md:order-2">
+<h3 class="font-headline text-4xl font-black uppercase tracking-tighter mb-8 leading-none">The Void <br/>of Sound</h3>
+<p class="text-lg text-on-surface-variant mb-10">Our space is acoustically dampened to ensure that the only sensory input is the plate before you. No ambient music. Only the symphony of the kitchen.</p>
+<button class="bg-primary text-on-primary font-headline text-xs uppercase tracking-[0.2em] font-bold py-5 px-10 hover:opacity-90 transition-opacity">
+                        Request a Table
+                    </button>
+</div>
+</div>
+</section>
+<!-- Directions & Map Section -->
+<section class="bg-black text-white py-24 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+<div>
+<h3 class="font-headline text-sm uppercase tracking-[0.4em] text-white/40 mb-12">Coordinates</h3>
+<div class="space-y-8 mb-16">
+<div>
+<p class="font-headline text-xs uppercase text-white/60 mb-2">Location</p>
+<p class="font-headline text-2xl">Rue de Rivoli, 75001 Paris</p>
+</div>
+<div>
+<p class="font-headline text-xs uppercase text-white/60 mb-2">Hours</p>
+<p class="font-headline text-xl">TUE — SAT / 19:00 — 23:00</p>
+</div>
+<div>
+<p class="font-headline text-xs uppercase text-white/60 mb-2">Contact</p>
+<p class="font-headline text-xl">concierge@lobscur.fr</p>
+</div>
+</div>
+<div class="h-[1px] bg-white/20 w-full mb-8"></div>
+<p class="text-white/40 italic">Valet parking is mandatory. Reservations must be secured 14 days in advance.</p>
+</div>
+<div class="relative grayscale-image aspect-square bg-surface-container-high overflow-hidden border border-white/10">
+<div class="absolute inset-0 bg-zinc-900 flex items-center justify-center">
+<!-- Placeholder for a stylized map look -->
+<div class="text-center">
+<span class="material-symbols-outlined text-6xl text-white/20 mb-4" data-weight="fill">location_on</span>
+<p class="font-headline text-xs tracking-widest uppercase text-white/40">Paris, 1st Arrondissement</p>
+</div>
+</div>
+<div class="hidden" data-location="Paris" style="">Map Location Anchor</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 bg-white dark:bg-black">
+<div class="bg-gray-100 dark:bg-gray-900 h-[4px] w-full absolute top-0"></div>
+<a class="flex flex-col items-center justify-center text-gray-300 dark:text-gray-700 h-12 w-full hover:text-black dark:hover:text-white transition-colors duration-200 Active: scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-black dark:text-white border-l-4 border-black dark:border-white h-12 w-full hover:text-black dark:hover:text-white transition-colors duration-200 Active: scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-300 dark:text-gray-700 h-12 w-full hover:text-black dark:hover:text-white transition-colors duration-200 Active: scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-300 dark:text-gray-700 h-12 w-full hover:text-black dark:hover:text-white transition-colors duration-200 Active: scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+</a>
+</nav>
+</body></html>
