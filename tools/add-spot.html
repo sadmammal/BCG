@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BCG — Add Spot Tool</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #111;
+      color: #e2e2e2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 680px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 20px;
+      margin-bottom: 36px;
+    }
+
+    header h1 {
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    header p {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .form-grid {
+      width: 100%;
+      max-width: 680px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #e2e2e2;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.85rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    select option {
+      background: #1a1a1a;
+    }
+
+    .categories-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .cat-chip {
+      cursor: pointer;
+      border: 1px solid #333;
+      padding: 5px 12px;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #888;
+      background: #1a1a1a;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .cat-chip.active {
+      background: #fff;
+      color: #111;
+      border-color: #fff;
+    }
+
+    .cat-add {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .cat-add input {
+      flex: 1;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #444;
+      color: #aaa;
+      padding: 10px 16px;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .btn-secondary:hover { border-color: #888; color: #fff; }
+
+    .coord-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .map-pick {
+      grid-column: 1 / -1;
+      cursor: pointer;
+      border: 1px dashed #333;
+      background: #161616;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #555;
+      transition: border-color 0.15s, color 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-pick:hover { border-color: #666; color: #aaa; }
+
+    #map-iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .divider {
+      grid-column: 1 / -1;
+      height: 1px;
+      background: #222;
+      margin: 8px 0;
+    }
+
+    .generate-btn {
+      grid-column: 1 / -1;
+      background: #fff;
+      color: #111;
+      border: none;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      margin-top: 8px;
+    }
+
+    .generate-btn:hover { opacity: 0.85; }
+
+    .output-section {
+      width: 100%;
+      max-width: 680px;
+      margin-top: 36px;
+    }
+
+    .output-section h2 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .output-box {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #7ec8a0;
+      white-space: pre;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    .copy-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid #333;
+      color: #888;
+      padding: 8px 18px;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .copy-btn:hover { border-color: #fff; color: #fff; }
+    .copy-btn.success { border-color: #7ec8a0; color: #7ec8a0; }
+
+    .instructions {
+      width: 100%;
+      max-width: 680px;
+      margin-top: 28px;
+      border: 1px solid #222;
+      padding: 20px 24px;
+      background: #141414;
+    }
+
+    .instructions h3 {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #555;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .instructions ol {
+      padding-left: 18px;
+      color: #666;
+      font-size: 0.78rem;
+      line-height: 1.8;
+    }
+
+    .instructions code {
+      background: #1e1e1e;
+      color: #7ec8a0;
+      padding: 1px 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+    }
+
+    .id-hint {
+      font-size: 0.65rem;
+      color: #555;
+      margin-top: 5px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>BCG — Add Spot</h1>
+  <p>Dev tool · Genera un nuevo entry para <code style="color:#7ec8a0; font-size:0.7rem;">restaurant.json</code></p>
+</header>
+
+<div class="form-grid">
+
+  <!-- Name -->
+  <div class="full">
+    <label for="name">Nombre del local</label>
+    <input type="text" id="name" placeholder="Ej: La Castellana Bar" oninput="autoId()" />
+  </div>
+
+  <!-- Auto ID -->
+  <div class="full">
+    <label for="id">ID (auto-generado)</label>
+    <input type="text" id="id" placeholder="ccs-004" />
+    <p class="id-hint">Ajusta el número al final para que sea único en el archivo.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Categories -->
+  <div class="full">
+    <label>Categorías</label>
+    <div class="categories-row" id="cat-chips">
+      <!-- chips rendered by JS -->
+    </div>
+    <div class="cat-add">
+      <input type="text" id="cat-custom" placeholder="Categoría personalizada..." />
+      <button class="btn-secondary" onclick="addCustomCat()">+ Añadir</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Description -->
+  <div class="full">
+    <label for="description">Descripción corta</label>
+    <textarea id="description" placeholder="Breve descripción del lugar..."></textarea>
+  </div>
+
+  <!-- Price range -->
+  <div>
+    <label for="price">Rango de precio</label>
+    <select id="price">
+      <option value="Low">$ — Bajo</option>
+      <option value="Medium" selected>$$ — Medio</option>
+      <option value="Medium-High">$$$ — Medio-Alto</option>
+      <option value="High">$$$$ — Alto</option>
+    </select>
+  </div>
+
+  <!-- Address -->
+  <div>
+    <label for="address">Dirección</label>
+    <input type="text" id="address" placeholder="Av. Francisco de Miranda, Altamira" />
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Coordinates -->
+  <div class="full">
+    <label>Coordenadas</label>
+    <p style="font-size:0.7rem; color:#555; margin-bottom:10px;">
+      Abre <a href="https://www.google.com/maps/@10.4806,-66.9036,14z" target="_blank" style="color:#7ec8a0;">Google Maps</a>, haz clic derecho en el punto exacto → copia las coordenadas, y pégalas aquí.
+    </p>
+    <div class="coord-row">
+      <div>
+        <label for="lat">Latitud</label>
+        <input type="number" id="lat" step="any" placeholder="10.494748" />
+      </div>
+      <div>
+        <label for="lng">Longitud</label>
+        <input type="number" id="lng" step="any" placeholder="-66.850544" />
+      </div>
+    </div>
+    <p style="font-size:0.65rem; color:#555; margin-top:8px; font-style:italic;">
+      Tip: En Google Maps, el formato es "latitud, longitud" (el número negativo es la longitud).
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <button class="generate-btn" onclick="generate()">Generar JSON ↓</button>
+</div>
+
+<!-- Output -->
+<div class="output-section" id="output-section" style="display:none;">
+  <h2>Entrada generada</h2>
+  <div class="output-box" id="output-box"></div>
+  <div class="copy-row">
+    <button class="copy-btn" id="copy-btn" onclick="copyJSON()">Copiar JSON</button>
+    <button class="copy-btn" onclick="reset()">Limpiar formulario</button>
+  </div>
+</div>
+
+<!-- Instructions -->
+<div class="instructions">
+  <h3>Cómo añadir el spot al app</h3>
+  <ol>
+    <li>Rellena el formulario y pulsa <strong>Generar JSON</strong>.</li>
+    <li>Copia el bloque generado.</li>
+    <li>Abre <code>src/data/restaurant.json</code>.</li>
+    <li>Añade una coma al final del último objeto <code>}</code> y pega el nuevo bloque antes del cierre <code>]</code>.</li>
+    <li>Guarda el archivo — Vite recargará automáticamente.</li>
+  </ol>
+</div>
+
+<script>
+  // ── Default categories ────────────────────────────────────────────────────
+  const DEFAULT_CATS = [
+    'Café', 'Panadería', 'Postres', 'Bar', 'Brunch',
+    'Pasta', 'Pizza', 'Sushi', 'Venezolana', 'Internacional',
+    'Música en vinilo', 'Pet Friendly', 'Terraza',
+  ];
+
+  let activeCats = new Set();
+  let allCats = [...DEFAULT_CATS];
+
+  function renderChips() {
+    const container = document.getElementById('cat-chips');
+    container.innerHTML = '';
+    allCats.forEach(cat => {
+      const chip = document.createElement('div');
+      chip.className = 'cat-chip' + (activeCats.has(cat) ? ' active' : '');
+      chip.textContent = cat;
+      chip.onclick = () => {
+        if (activeCats.has(cat)) activeCats.delete(cat);
+        else activeCats.add(cat);
+        renderChips();
+      };
+      container.appendChild(chip);
+    });
+  }
+
+  function addCustomCat() {
+    const input = document.getElementById('cat-custom');
+    const val = input.value.trim();
+    if (!val) return;
+    if (!allCats.includes(val)) allCats.push(val);
+    activeCats.add(val);
+    input.value = '';
+    renderChips();
+  }
+
+  document.getElementById('cat-custom').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); addCustomCat(); }
+  });
+
+  // ── Auto ID from name ─────────────────────────────────────────────────────
+  let idEdited = false;
+  document.getElementById('id').addEventListener('input', () => { idEdited = true; });
+
+  function autoId() {
+    if (idEdited) return;
+    const name = document.getElementById('name').value.trim();
+    const slug = name.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 20);
+    document.getElementById('id').value = slug ? `ccs-${slug}` : '';
+  }
+
+  // ── Generate ──────────────────────────────────────────────────────────────
+  function generate() {
+    const name = document.getElementById('name').value.trim();
+    const id   = document.getElementById('id').value.trim();
+    const desc = document.getElementById('description').value.trim();
+    const price = document.getElementById('price').value;
+    const address = document.getElementById('address').value.trim();
+    const lat = parseFloat(document.getElementById('lat').value);
+    const lng = parseFloat(document.getElementById('lng').value);
+    const cats = [...activeCats];
+
+    const errors = [];
+    if (!name) errors.push('Nombre');
+    if (!id)   errors.push('ID');
+    if (cats.length === 0) errors.push('al menos una Categoría');
+    if (!address) errors.push('Dirección');
+    if (isNaN(lat)) errors.push('Latitud');
+    if (isNaN(lng)) errors.push('Longitud');
+
+    if (errors.length) {
+      alert('Faltan campos: ' + errors.join(', '));
+      return;
+    }
+
+    const obj = {
+      id,
+      name,
+      coordinates: { lat, lng },
+      category: cats,
+      description: desc || `${cats[0]} en Caracas.`,
+      price_range: price,
+      address,
+    };
+
+    const json = JSON.stringify(obj, null, 2);
+    document.getElementById('output-box').textContent = json;
+    document.getElementById('output-section').style.display = 'block';
+    document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── Copy ──────────────────────────────────────────────────────────────────
+  function copyJSON() {
+    const text = document.getElementById('output-box').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('success');
+      setTimeout(() => { btn.textContent = 'Copiar JSON'; btn.classList.remove('success'); }, 2000);
+    });
+  }
+
+  // ── Reset ─────────────────────────────────────────────────────────────────
+  function reset() {
+    document.getElementById('name').value = '';
+    document.getElementById('id').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('price').value = 'Medium';
+    document.getElementById('address').value = '';
+    document.getElementById('lat').value = '';
+    document.getElementById('lng').value = '';
+    activeCats = new Set();
+    idEdited = false;
+    renderChips();
+    document.getElementById('output-section').style.display = 'none';
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  renderChips();
+</script>
+</body>
+</html>

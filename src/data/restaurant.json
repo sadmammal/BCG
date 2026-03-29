@@ -6,7 +6,11 @@
       "lat": 10.494748570167253,
       "lng": -66.85054470255146
     },
-    "category": ["Panadería", "Café", "Postres"],
+    "category": [
+      "Panadería",
+      "Café",
+      "Postres"
+    ],
     "description": "Panadería artesanal con productos de alta calidad.",
     "price_range": "Medium",
     "address": "Av. Francisco de Miranda, Altamira"
@@ -18,7 +22,12 @@
       "lat": 10.495869535829266,
       "lng": -66.85380711534154
     },
-    "category": ["Café", "Bar", "Música en vinilo", "Pet Friendly"],
+    "category": [
+      "Café",
+      "Bar",
+      "Música en vinilo",
+      "Pet Friendly"
+    ],
     "description": "Café, bar y sala de escucha.",
     "price_range": "Medium",
     "address": "Calle José Félix Ribas, Chacao"
@@ -30,9 +39,30 @@
       "lat": 10.494686864707948,
       "lng": -66.85444997058988
     },
-    "category": ["Café", "Postres", "Brunch"],
+    "category": [
+      "Café",
+      "Postres",
+      "Brunch"
+    ],
     "description": "Café, postres y brunch.",
     "price_range": "Medium",
     "address": "Calle Páez, Chacao"
+  },
+  {
+    "id": "ccs-004",
+    "name": "McDonald's - La Castellana",
+    "coordinates": {
+      "lat": 10.498429881721542,
+      "lng": -66.85123567116462
+    },
+    "category": [
+      "Hamburguesa",
+      "Café",
+      "Postres",
+      "Panadería"
+    ],
+    "description": "Pues un McDonald's",
+    "price_range": "Low",
+    "address": "Frente a Plaza Isabel La Católica, 2da Transversal, La Castellana"
   }
 ]

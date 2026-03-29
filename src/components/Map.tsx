@@ -3,19 +3,18 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import restaurants from '../data/restaurant.json';
 
+import { useAppStore } from '../store/useAppStore';
+
 const Map = ({ 
   onSelectMarker,
-  selectedId,
-  activeFilter = 'Todos',
-  starFilter = 0,
   getDiaryEntry,
 }: { 
   onSelectMarker: (id: string) => void;
-  selectedId?: string | null;
-  activeFilter?: string;
-  starFilter?: number;
   getDiaryEntry?: (id: string) => { rating?: number } | null;
 }) => {
+  const selectedId = useAppStore(state => state.selectedCardId);
+  const activeFilter = useAppStore(state => state.activeFilter);
+  const starFilter = useAppStore(state => state.starFilter);
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<maplibregl.Map | null>(null);
   const markersRef = useRef<{ [id: string]: maplibregl.Marker }>({});
@@ -33,7 +32,6 @@ const Map = ({
     });
 
     mapInstance.current = map;
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
 
     map.on('load', () => {
       map.resize();
@@ -136,10 +134,10 @@ const Map = ({
         isVisible = restaurant.category.includes(activeFilter);
       }
 
-      // Star filter — only show restaurants rated with exactly `starFilter` stars
+      // Star filter — show restaurants rated >= starFilter (">3★" = 4+, ">4★" = 5)
       if (isVisible && starFilter > 0) {
         const entry = getDiaryEntry ? getDiaryEntry(id) : null;
-        isVisible = entry?.rating === starFilter;
+        isVisible = (entry?.rating ?? 0) >= starFilter;
       }
 
       const el = marker.getElement();

@@ -12,19 +12,24 @@ export interface DiaryEntry {
 export const useBitacora = () => {
   const [rincones, setRincones] = useState<string[]>([]);
   const [wantToGo, setWantToGo] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [diary, setDiary] = useState<Record<string, DiaryEntry>>({});
+  const [isReady, setIsReady] = useState(false);
 
   // Load from phone storage on start
   useEffect(() => {
     const loadData = async () => {
-      const [{ value: favs }, { value: wtg }, { value: diaryData }] = await Promise.all([
+      const [{ value: favs }, { value: wtg }, { value: diaryData }, { value: favsList }] = await Promise.all([
         Preferences.get({ key: 'user_bitacora_v1' }),
         Preferences.get({ key: 'user_wanttogo_v1' }),
         Preferences.get({ key: 'user_diary_v1' }),
+        Preferences.get({ key: 'user_favorites_v1' }),
       ]);
       if (favs) setRincones(JSON.parse(favs));
       if (wtg) setWantToGo(JSON.parse(wtg));
+      if (favsList) setFavorites(JSON.parse(favsList));
       if (diaryData) setDiary(JSON.parse(diaryData));
+      setIsReady(true);
     };
     loadData();
   }, []);
@@ -45,6 +50,14 @@ export const useBitacora = () => {
     await Preferences.set({ key: 'user_wanttogo_v1', value: JSON.stringify(updated) });
   };
 
+  const toggleFavorite = async (id: string) => {
+    const updated = favorites.includes(id)
+      ? favorites.filter(f => f !== id)
+      : [...favorites, id];
+    setFavorites(updated);
+    await Preferences.set({ key: 'user_favorites_v1', value: JSON.stringify(updated) });
+  };
+
   const reorderRincones = async (newOrder: string[]) => {
     setRincones(newOrder);
     await Preferences.set({ key: 'user_bitacora_v1', value: JSON.stringify(newOrder) });
@@ -63,11 +76,13 @@ export const useBitacora = () => {
   const clearData = async () => {
     setRincones([]);
     setWantToGo([]);
+    setFavorites([]);
     setDiary({});
     await Promise.all([
       Preferences.remove({ key: 'user_bitacora_v1' }),
       Preferences.remove({ key: 'user_wanttogo_v1' }),
       Preferences.remove({ key: 'user_diary_v1' }),
+      Preferences.remove({ key: 'user_favorites_v1' }),
     ]);
   };
 
@@ -111,13 +126,16 @@ export const useBitacora = () => {
   return {
     rincones,
     wantToGo,
+    favorites,
     diary,
     toggleRincon,
     toggleWantToGo,
+    toggleFavorite,
     reorderRincones,
     setDiaryEntry,
     getDiaryEntry,
     clearData,
     exportData,
+    isReady,
   };
 };

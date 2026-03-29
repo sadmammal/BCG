@@ -1,13 +1,15 @@
 import { useRef, useState } from 'react';
 import { Drawer, DrawerContent } from "@/components/ui/drawer"
-import { Heart, Bookmark } from "lucide-react"
+import { Heart, Clock } from "lucide-react"
 import type { DiaryEntry } from '../hooks/useBitacora';
 
 interface DetailSheetProps {
   restaurant: any;
   onClose: () => void;
-  isSaved?: boolean;
-  onToggleSave?: (id: string) => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (id: string) => void;
+  isLogged?: boolean;
+  onLogVisit?: (id: string) => void;
   isWantToGo?: boolean;
   onToggleWantToGo?: (id: string) => void;
   diaryEntry?: DiaryEntry | null;
@@ -17,8 +19,10 @@ interface DetailSheetProps {
 export default function DetailSheet({
   restaurant,
   onClose,
-  isSaved,
-  onToggleSave,
+  isFavorite,
+  onToggleFavorite,
+  isLogged,
+  onLogVisit,
   isWantToGo,
   onToggleWantToGo,
   diaryEntry,
@@ -150,19 +154,19 @@ export default function DetailSheet({
 
                 {/* Save / WantToGo controls */}
                 <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', gap: '8px' }}>
-                  {onToggleSave && (
+                  {onToggleFavorite && (
                     <button
-                      onClick={() => onToggleSave(r.id)}
+                      onClick={() => onToggleFavorite(r.id)}
                       style={{
                         width: '36px', height: '36px',
-                        backgroundColor: isSaved ? '#fff' : 'rgba(255,255,255,0.15)',
+                        backgroundColor: isFavorite ? '#fff' : 'rgba(255,255,255,0.15)',
                         border: '1px solid rgba(255,255,255,0.3)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         cursor: 'pointer',
                         backdropFilter: 'blur(4px)',
                       }}
                     >
-                      <Heart size={15} fill={isSaved ? '#000' : 'none'} color={isSaved ? '#000' : '#fff'} />
+                      <Heart size={15} fill={isFavorite ? '#ff4040' : 'none'} color={isFavorite ? '#ff4040' : '#fff'} />
                     </button>
                   )}
                   {onToggleWantToGo && (
@@ -177,7 +181,7 @@ export default function DetailSheet({
                         backdropFilter: 'blur(4px)',
                       }}
                     >
-                      <Bookmark size={15} fill={isWantToGo ? '#000' : 'none'} color={isWantToGo ? '#000' : '#fff'} />
+                      <Clock size={15} color={isWantToGo ? '#000' : '#fff'} />
                     </button>
                   )}
                 </div>
@@ -230,13 +234,32 @@ export default function DetailSheet({
                   Mi entrada
                 </p>
 
-                {!isSaved && (
-                  <p style={{ fontFamily: 'Noto Serif, serif', fontStyle: 'italic', fontSize: '0.85rem', color: '#aaa', marginBottom: '28px', lineHeight: 1.6 }}>
-                    Guarda este lugar en tus rincones para escribir tu entrada de diario.
-                  </p>
+                {!isLogged && (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '28px' }}>
+                    <p style={{ fontFamily: 'Noto Serif, serif', fontStyle: 'italic', fontSize: '0.85rem', color: '#aaa', marginBottom: '16px', lineHeight: 1.6, textAlign: 'center' }}>
+                      ¿Ya viniste? Añade este lugar a tu ranking para calificarlo.
+                    </p>
+                    <button
+                      onClick={() => onLogVisit && onLogVisit(r.id)}
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '11px',
+                        fontWeight: 700,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.1em',
+                        color: '#fff',
+                        backgroundColor: '#1b1b1b',
+                        border: 'none',
+                        padding: '16px 36px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Ya fui ✓
+                    </button>
+                  </div>
                 )}
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', opacity: isSaved ? 1 : 0.4, pointerEvents: isSaved ? 'auto' : 'none' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', opacity: isLogged ? 1 : 0.4, pointerEvents: isLogged ? 'auto' : 'none' }}>
                   {/* Rating */}
                   <div>
                     <label style={labelStyle}>Valoración</label>
